@@ -99,7 +99,7 @@ local config = {
 cmp.setup(config)
 EOF
 
-" LSP (Rust, Clang)
+" LSP (Rust, Clang, Python)
 lua << EOF
 local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -135,6 +135,9 @@ nvim_lsp.rust_analyzer.setup({
 nvim_lsp.clangd.setup {
   capabilities = capabilities,
 }
+
+-- Python
+nvim_lsp.pylsp.setup{}
 EOF
 
 " Rust tools
@@ -167,6 +170,7 @@ set modifiable
 set cursorline
 
 " Ident
+set colorcolumn=90
 set tabstop=4
 set shiftwidth=4
 set expandtab
