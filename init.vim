@@ -175,3 +175,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Spelling
+set spelllang=en_us
+set spell
+
