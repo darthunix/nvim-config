@@ -99,7 +99,7 @@ local config = {
 cmp.setup(config)
 EOF
 
-" LSP (Rust, Clang, Python)
+" LSP (Rust, Clang, Python, Typescript)
 lua << EOF
 local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -138,6 +138,9 @@ nvim_lsp.clangd.setup {
 
 -- Python
 nvim_lsp.pylsp.setup{}
+
+-- Typescript
+nvim_lsp.tsserver.setup{}
 EOF
 
 " Rust tools
