@@ -71,38 +71,11 @@ require'lspconfig'.lua_ls.setup {
 }
 EOF
 
-" Cmp
-lua << EOF
-local cmp = require("cmp")
-
-local config = {
-    snippet = {
-        expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-    }, {
-        { name = "buffer" },
-    })
-}
-
-cmp.setup(config)
-EOF
-
-" LSP (Rust, Clang, Python, Typescript)
+" LSP (Rust, Clang, Python, Typescript, Solidity)
 lua << EOF
 local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local configs = require("lspconfig.configs")
 
 -- Rust
 local on_attach = function(client)
@@ -141,6 +114,45 @@ nvim_lsp.pylsp.setup{}
 
 -- Typescript
 nvim_lsp.tsserver.setup{}
+
+-- Solidity
+configs.solidity = {
+  default_config = {
+    cmd = {"nomicfoundation-solidity-language-server", "--stdio"},
+    filetypes = { "solidity" },
+    root_dir = nvim_lsp.util.find_git_ancestor,
+    single_file_support = true,
+  },
+}
+nvim_lsp.solidity.setup{}
+EOF
+
+" Cmp
+lua << EOF
+local cmp = require("cmp")
+
+local config = {
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+    }, {
+        { name = "buffer" },
+    })
+}
+
+cmp.setup(config)
 EOF
 
 " Rust tools
@@ -179,6 +191,9 @@ set shiftwidth=4
 set expandtab
 
 " Spelling
-set spelllang=en_us
+set spelllang=en_us,ru_ru
 set spell
 
+" Language switch
+nnoremap lr <cmd>set keymap=russian-jcukenwin<cr>
+nnoremap le <cmd>set keymap=""<cr>
