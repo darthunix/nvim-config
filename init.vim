@@ -71,7 +71,7 @@ require'lspconfig'.lua_ls.setup {
 }
 EOF
 
-" LSP (Rust, Clang, Python, Typescript, Solidity)
+" LSP (Rust, Clang, Python, Typescript, Solidity, Golang)
 lua << EOF
 local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -125,6 +125,25 @@ configs.solidity = {
   },
 }
 nvim_lsp.solidity.setup{}
+
+--Golang
+nvim_lsp.gopls.setup{}
+EOF
+
+" Rust tools
+lua << EOF
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
 EOF
 
 " Cmp
@@ -153,22 +172,6 @@ local config = {
 }
 
 cmp.setup(config)
-EOF
-
-" Rust tools
-lua << EOF
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-})
 EOF
 
 " Copilot
