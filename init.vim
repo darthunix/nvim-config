@@ -71,7 +71,7 @@ require'lspconfig'.lua_ls.setup {
 }
 EOF
 
-" LSP (Rust, Clang, Python, Typescript, Solidity, Golang)
+" LSP (programming languages)
 lua << EOF
 local nvim_lsp = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -128,6 +128,11 @@ nvim_lsp.solidity.setup{}
 
 --Golang
 nvim_lsp.gopls.setup{}
+
+-- Markdown
+nvim_lsp.markdown_oxide.setup({
+  capabilities = capabilities,
+})
 EOF
 
 " Rust tools
@@ -164,7 +169,14 @@ local config = {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
-        { name = "nvim_lsp" },
+        {
+            name = "nvim_lsp",
+            option = {
+                markdown_oxide = {
+                  keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+                }
+            }
+        },
         { name = "luasnip" },
     }, {
         { name = "buffer" },
