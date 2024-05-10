@@ -128,11 +128,6 @@ nvim_lsp.solidity.setup{}
 
 --Golang
 nvim_lsp.gopls.setup{}
-
--- Markdown
-nvim_lsp.markdown_oxide.setup({
-  capabilities = capabilities,
-})
 EOF
 
 " Rust tools
@@ -162,21 +157,14 @@ local config = {
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-r>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-l>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
-        {
-            name = "nvim_lsp",
-            option = {
-                markdown_oxide = {
-                  keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
-                }
-            }
-        },
+        { name = "nvim_lsp" },
         { name = "luasnip" },
     }, {
         { name = "buffer" },
