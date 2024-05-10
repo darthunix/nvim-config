@@ -198,5 +198,7 @@ set spelllang=en_us,ru_ru
 set spell
 
 " Language switch
-nnoremap lr <cmd>set keymap=russian-jcukenwin<cr>
-nnoremap le <cmd>set keymap=""<cr>
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=-1
+inoremap <ESC> <ESC>:set iminsert=0<CR>
